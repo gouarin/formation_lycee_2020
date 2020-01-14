@@ -1,0 +1,9 @@
+name: enseignement_2020
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - matplotlib
+  - ipywidgets
+  - bqplot
+  - notebook
