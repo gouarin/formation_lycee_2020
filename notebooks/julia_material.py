@@ -69,6 +69,14 @@ def plot_orbit(z0=0.5+0.5*1j, c=0+0*1j):
                    enable_move=True, default_size=200)
     z_point.update_on_move = True
 
+    c_label = bqplot.Label(x=[c.real+.05], y=[c.imag+.05], scales={'x': sc_x, 'y': sc_y}, colors=['red'],
+                           text=['c'],
+                           default_size=26, font_weight='bolder')
+
+    z_label = bqplot.Label(x=[z0.real+.05], y=[z0.imag+.05], scales={'x': sc_x, 'y': sc_y}, colors=['green'],
+                           text=['z0'],
+                           default_size=26, font_weight='bolder')
+    
     scatt = bqplot.Scatter(x=[], y=[], scales={'x': sc_x, 'y': sc_y}, colors=['black'], default_size=20)
 
     theta = np.linspace(0, 2.*np.pi, 1000)
@@ -79,6 +87,10 @@ def plot_orbit(z0=0.5+0.5*1j, c=0+0*1j):
 
     def update_line(change=None):
         out = orbit(z_point.x + 1j*z_point.y, c_point.x + 1j*c_point.y)
+        c_label.x = c_point.x + 0.05
+        c_label.y = c_point.y + 0.05
+        z_label.x = z_point.x + 0.05
+        z_label.y = z_point.y + 0.05
         lin.x = out.real
         lin.y = out.imag
         scatt.x = out.real.flatten()
@@ -93,7 +105,7 @@ def plot_orbit(z0=0.5+0.5*1j, c=0+0*1j):
     ax_x = bqplot.Axis(scale=sc_x, offset=dict(value=0.5), grid_lines='none')
     ax_y = bqplot.Axis(scale=sc_y, orientation='vertical', offset=dict(value=0.5), grid_lines='none')
 
-    fig = bqplot.Figure(marks=[scatt, lin, circle, c_point, z_point], axes=[ax_x, ax_y],
+    fig = bqplot.Figure(marks=[scatt, lin, circle, c_point, z_point, c_label, z_label], axes=[ax_x, ax_y],
                  min_aspect_ratio=1, max_aspect_ratio=1)
     fig.layout.height = '800px'
     return fig
